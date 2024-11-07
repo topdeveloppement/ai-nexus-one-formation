@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cloner le dépôt GitHub
+      - name: Cloner le dépôt GitHub (clone complet)
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Cloner l'historique complet pour éviter les erreurs de shallow update
 
       - name: Configurer l'identité Git
         run: |
