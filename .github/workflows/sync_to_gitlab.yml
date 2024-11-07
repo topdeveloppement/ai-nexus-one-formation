@@ -1,0 +1,21 @@
+name: Sync to GitLab
+
+on:
+  push:
+    branches:
+      - main  # Spécifiez la branche GitHub à synchroniser
+
+jobs:
+  push_to_gitlab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloner le dépôt GitHub
+        uses: actions/checkout@v2
+
+      - name: Pousser vers GitLab
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}  # Utilise le secret GitLab
+        run: |
+          git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/ai-nexus-one-formation/machine-learning.git
+          git push -u gitlab --all
