@@ -3,7 +3,7 @@ name: Sync to GitLab
 on:
   push:
     branches:
-      - main  # Spécifiez la branche à synchroniser
+      - main  # Spécifiez la branche que vous voulez synchroniser
 
 jobs:
   push_to_gitlab:
@@ -18,15 +18,14 @@ jobs:
           git config --global user.email "topdeveloppement@gmail.com"
           git config --global user.name "Omar Kennouche"
 
-      - name: Tirer les modifications de GitLab
+      - name: Ajouter le dépôt GitLab comme remote
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         run: |
           git remote add gitlab https://oauth2:${GITLAB_TOKEN}@gitlab.com/ai-nexus-one-formation/machine-learning.git
-          git pull gitlab main --rebase
 
-      - name: Pousser vers GitLab
+      - name: Forcer le push vers GitLab
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
         run: |
-          git push -u gitlab --all
+          git push -u gitlab main --force
